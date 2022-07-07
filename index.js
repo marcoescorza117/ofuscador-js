@@ -102,3 +102,10 @@ async function creatorFiles() {
 }
 
 //console.log(getDirectoriesANDFiles())
+
+creatorFiles()
+    .then(() => {
+        console.log("Verifique que los archivos funcionen correctamente")
+    }).catch(err => {
+        console.error(err);
+    });
