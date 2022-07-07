@@ -1,11 +1,20 @@
-
 const fs = require('fs');
 const path = require('path');
 const fse = require('fs-extra');
 
+/**
+ * 
+ * @param {*} lists 
+ * @returns 
+ */
 function flatten(lists) {
     return lists.reduce((a, b) => a.concat(b), []);
 }
+/**
+ * 
+ * @param {*} srcpath Path de carpeta
+ * @returns Obtiene solo directorios
+ */
 
 function getDirectories(srcpath) {
     return fs.readdirSync(srcpath)
@@ -13,28 +22,38 @@ function getDirectories(srcpath) {
         .filter(path => fs.statSync(path).isDirectory());
 }
 
+/**
+ * 
+ * @param {*} srcpath Path de carpeta
+ * @returns  ficheros de carpeta (recursivo)
+ */
 function getDirectoriesRecursive(srcpath) {
     return [srcpath, ...flatten(getDirectories(srcpath).map(getDirectoriesRecursive))];
 }
 
-
+/**
+ * 
+ * @param {*} srcpath Path de carpeta
+ * @returns ficheros de carpeta
+ */
 function getFiles(srcpath) {
     return fs.readdirSync(srcpath)
         .map(file => path.join(srcpath, file))
         .filter(path => fs.statSync(path).isFile());
 }
 
-
-function convertContextFile(file){
+/**
+ * 
+ * @param {*} file Fichero de ruta declarada
+ * @returns Texto minificado y ofuscado
+ */
+function convertFileText(file){
 
     let filePath = `.\\${file}`;
-
     var JavaScriptObfuscator = require('javascript-obfuscator');
-
     try {
 
         let data = fs.readFileSync(filePath, "utf-8")
-        //return data.toString();
         var obfuscationResult = JavaScriptObfuscator.obfuscate(data,{
              target: 'browser'
             ,disableConsoleOutput: true
@@ -57,7 +76,12 @@ function convertContextFile(file){
     }
 }
 
-async function getDirectoriesANDFiles() {
+/**
+ * Funcion principal para ejecucion del programa
+ * Se declara dentro de directorio ruta relativa de carpeta
+ * con ficheros .js
+ */
+async function creatorFiles() {
 
     let array = [];
     let data = getDirectoriesRecursive('./bolsaTrabajo')
@@ -68,13 +92,13 @@ async function getDirectoriesANDFiles() {
         });
     });
 
-    console.log(`Ficheros toales a convertir: ${array.length}`);
+    console.log(`Ficheros totales a convertir: ${array.length}`);
 
-    console.log("Convirtiendo archivos... espere un momento por favor")
+    console.log("Convirtiendo archivos... espera un momento por favor")
     array.forEach( async (element)=>{
-        await fse.outputFile(`.\\encodedFiles\\${element}`, convertContextFile(element));
+        await fse.outputFile(`.\\encodedFiles\\${element}`, convertFileText(element));
     })
     console.log("Archivos creados!!!")
 }
 
-console.log(getDirectoriesANDFiles())
+//console.log(getDirectoriesANDFiles())
