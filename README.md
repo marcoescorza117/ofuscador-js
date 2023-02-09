@@ -47,7 +47,7 @@ This minifier is created to automate the process of minifying and obscuring .js 
 ## License
 Licensed under MIT
 
-Copyrigth (c) 2012 - 2022  [Marco Escorza](https://github.com/marcoescorza117)
+Copyrigth (c) 2012 - 2023  [Marco Escorza](https://github.com/marcoescorza117)
 
 <br>
 
@@ -103,4 +103,4 @@ Este minificador se crea para automatizar el proceso de minificación y ofuscaci
 ## License
 Licensed under MIT
 
-Copyrigth (c) 2012 - 2022  [Marco Escorza](https://github.com/marcoescorza117)
+Copyrigth (c) 2012 - 2023  [Marco Escorza](https://github.com/marcoescorza117)
