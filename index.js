@@ -84,7 +84,7 @@ function convertFileText(file){
 async function creatorFiles() {
 
     let array = [];
-    let data = getDirectoriesRecursive('./bolsaTrabajo')
+    let data = getDirectoriesRecursive('./cambiosHorarios')
 
     data.forEach(element => {
         getFiles(element).forEach(element => {
